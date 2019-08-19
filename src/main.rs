@@ -104,7 +104,7 @@ fn main() {
         }
         n => {
             logger.error(format!(
-                "Expected 2 arguments (.xz.wyr file, and .pub file), found {} arguments",
+                "Expected 1 arguments (.xz.wyr file), found {} arguments",
                 n
             ));
             return;

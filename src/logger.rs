@@ -3,8 +3,8 @@ use termion::color::{Fg, Rgb};
 use termion::style::Reset;
 
 pub const GRAY: Fg<Rgb> = Fg(Rgb(153, 153, 153));
-pub const GREEN: Fg<Rgb> = Fg(Rgb(62, 75, 14));
-pub const RED: Fg<Rgb> = Fg(Rgb(100, 42, 39));
+pub const GREEN: Fg<Rgb> = Fg(Rgb(62, 77, 0));
+pub const RED: Fg<Rgb> = Fg(Rgb(100, 20, 20));
 
 pub struct Logger {
     writer: Stdout,
