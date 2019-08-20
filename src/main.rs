@@ -162,13 +162,5 @@ fn main() {
         .spawn()
         .expect("Failed to run SoX");
 
-    match fs::remove_file("_temp.raw") {
-        Ok(_) => (),
-        Err(e) => {
-            logger.error(format!("Failed to remove file '_temp.raw': {}", e));
-            return;
-        }
-    };
-
     logger.info("Success!");
 }
