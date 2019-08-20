@@ -1,3 +1,6 @@
+extern crate libpulse_binding as pulse;
+extern crate libpulse_simple_binding as psimple;
+
 mod logger;
 
 use crypto::aead::AeadDecryptor;
@@ -8,10 +11,14 @@ use crypto::sha3::Sha3;
 use logger::Logger;
 use openssl::derive::Deriver;
 use openssl::pkey::PKey;
+use psimple::Simple;
+use pulse::sample;
+use pulse::stream::Direction;
 use std::env;
 use std::fs;
 use std::io::Write;
 use std::process::Command;
+use std::time::Duration;
 
 fn main() {
     let mut logger = Logger::new();
@@ -19,7 +26,7 @@ fn main() {
     let username = whoami::username();
 
     let (shared_secret, ciphertext, tag, iv) = match args.len() {
-        n if n == 2 as usize => {
+        n if n >= 2 as usize => {
             // Read the WYR file and the encrypted private key file
             match (
                 // Index 0 is the process name
@@ -136,8 +143,57 @@ fn main() {
         }
     };
 
+    match args.get(2) {
+        Some(n) => {
+            if n.eq_ignore_ascii_case("play") {
+                let spec = sample::Spec {
+                    format: sample::SAMPLE_S24NE,
+                    channels: 2,
+                    rate: 44100,
+                };
+                assert!(spec.is_valid());
+
+                let s = Simple::new(
+                    None,                // Use the default server
+                    "wyrtap-reader",     // Our application’s name
+                    Direction::Playback, // We want a playback stream
+                    None,                // Use the default device
+                    "Playback",          // Description of our stream
+                    &spec,               // Our sample format
+                    None,                // Use default channel map
+                    None,                // Use default buffering attributes
+                )
+                .unwrap();
+
+                match s.write(audio.as_slice()) {
+                    Ok(_) => (),
+                    Err(e) => {
+                        logger.error(format!("Failed to play audio: {}", e));
+                        return;
+                    }
+                };
+
+                match args.get(3) {
+                    Some(n) => {
+                        match n.eq_ignore_ascii_case("nowrite") {
+                            true => return,
+                            false => {
+                                logger.error("Valid options for 3rd argument are: (nowrite)");
+                            }
+                        };
+                    }
+                    None => return,
+                };
+            }
+        }
+        None => (),
+    };
+
     // Write audio to disk and convert to WAV (using SoX), deleting original file
-    match fs::write(format!("/home/{}/output/_temp.raw", &username), audio.as_slice()) {
+    match fs::write(
+        format!("/home/{}/output/_temp.raw", &username),
+        audio.as_slice(),
+    ) {
         Ok(_) => (),
         Err(e) => {
             logger.error(format!("Failed to write to file: {}", e));
@@ -161,6 +217,8 @@ fn main() {
         ])
         .spawn()
         .expect("Failed to run SoX");
+
+    std::thread::sleep(Duration::from_secs(2));
 
     logger.info("Success!");
 }

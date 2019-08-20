@@ -73,6 +73,43 @@ version = "0.2.62"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "libpulse-binding"
+version = "2.11.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "libc 0.2.62 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libpulse-sys 1.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "libpulse-simple-binding"
+version = "2.11.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "libpulse-binding 2.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libpulse-simple-sys 1.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libpulse-sys 1.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "libpulse-simple-sys"
+version = "1.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "libpulse-sys 1.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pkg-config 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "libpulse-sys"
+version = "1.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "libc 0.2.62 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pkg-config 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "numtoa"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -297,6 +334,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "wyrtap-reader"
 version = "0.1.0"
 dependencies = [
+ "libpulse-binding 2.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libpulse-simple-binding 2.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "openssl 0.10.24 (registry+https://github.com/rust-lang/crates.io-index)",
  "openssl-sys 0.9.49 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -320,6 +359,10 @@ dependencies = [
 "checksum getrandom 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)" = "6171a6cc63fbabbe27c2b5ee268e8b7fe5dc1eb0dd2dfad537c1dfed6f69117e"
 "checksum lazy_static 1.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "bc5729f27f159ddd61f4df6228e827e86643d4d3e7c32183cb30a1c08f604a14"
 "checksum libc 0.2.62 (registry+https://github.com/rust-lang/crates.io-index)" = "34fcd2c08d2f832f376f4173a231990fa5aef4e99fb569867318a227ef4c06ba"
+"checksum libpulse-binding 2.11.1 (registry+https://github.com/rust-lang/crates.io-index)" = "e7712e3c895da914d7d969475238cc43933c5c4cf7ef3654106be9db2b327cbb"
+"checksum libpulse-simple-binding 2.11.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cc6a073593e603735fde199372c7dddf638cb5beedb9a59e2bfc7c22a94dc971"
+"checksum libpulse-simple-sys 1.9.1 (registry+https://github.com/rust-lang/crates.io-index)" = "8d87a9836d4c0ed802dc4db2ca60bc7dd6684d6757c3e3e03486b00515308d5e"
+"checksum libpulse-sys 1.9.1 (registry+https://github.com/rust-lang/crates.io-index)" = "67df96705dc149577155690c05e067334d1d8a62bcac1a1611ef28eaaeb76354"
 "checksum numtoa 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b8f8bdf33df195859076e54ab11ee78a1b208382d3a26ec40d142ffc1ecc49ef"
 "checksum openssl 0.10.24 (registry+https://github.com/rust-lang/crates.io-index)" = "8152bb5a9b5b721538462336e3bef9a539f892715e5037fda0f984577311af15"
 "checksum openssl-sys 0.9.49 (registry+https://github.com/rust-lang/crates.io-index)" = "f4fad9e54bd23bd4cbbe48fdc08a1b8091707ac869ef8508edea2fec77dcc884"
