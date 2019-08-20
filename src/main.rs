@@ -137,7 +137,7 @@ fn main() {
     };
 
     // Write audio to disk and convert to WAV (using SoX), deleting original file
-    match fs::write("/home/{}/output/_temp.raw", audio.as_slice()) {
+    match fs::write(format!("/home/{}/output/_temp.raw", &username), audio.as_slice()) {
         Ok(_) => (),
         Err(e) => {
             logger.error(format!("Failed to write to file: {}", e));
