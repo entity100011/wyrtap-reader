@@ -105,7 +105,7 @@ fn main() {
         n => {
             logger.error(format!(
                 "Expected 1 arguments (.xz.wyr file), found {} arguments",
-                n
+                n - 1
             ));
             return;
         }
@@ -148,7 +148,16 @@ fn main() {
     // sox -r 44100 -e signed -b 24 -c 2 temp.raw temp.wav
     Command::new("sox")
         .args(&[
-            "-r", "44100", "-e", "signed", "-b", "24", "-c", "2", "_temp.raw", "_temp.wav",
+            "-r",
+            "44100",
+            "-e",
+            "signed",
+            "-b",
+            "24",
+            "-c",
+            "2",
+            "_temp.raw",
+            "_temp.wav",
         ])
         .spawn()
         .expect("Failed to run SoX");
